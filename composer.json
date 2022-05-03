@@ -1,0 +1,30 @@
+{
+    "name": "hahadu/documentarian",
+    "description": "",
+    "keywords": [],
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Hahadu",
+            "email": "582167246@qq.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "src/includes/helpers.php"
+        ],
+        "psr-4": {
+            "Hahadu\\WechatPlatform\\": "src/"
+        }
+    },
+    "bin": [
+        "documentarian"
+    ],
+    "require": {
+        "php": ">=7.0"
+
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8"
+    }
+}
