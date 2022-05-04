@@ -21,7 +21,13 @@ class Spu extends Platfrom
         return $this->post($spu_data->filterArray());
 
     }
-    public function update($product_id,SpuData $spu_data)
+
+    /**
+     * @param SpuData $spu_data
+     * @return mixed
+     * @throws \Throwable
+     */
+    public function update(SpuData $spu_data)
     {
 
         $spu_data->checkData();
