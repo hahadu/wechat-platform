@@ -18,6 +18,8 @@ class Platfrom
     protected $guzzle;
     protected $heads = null;
 
+    //protected $redis;
+
     public function __construct()
     {
         $this->guzzle = new Client();

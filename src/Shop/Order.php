@@ -9,7 +9,7 @@ use Hahadu\WechatPlatform\Platfrom;
  *
  * https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/ministore/minishopopencomponent2/API/order/getpaymentparams.html
  */
-class WechatShopOrder extends Platfrom
+class Order extends Platfrom
 {
 
     /**

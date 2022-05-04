@@ -27,14 +27,12 @@ class Before extends Platfrom
      * @param string $imgUrl
      * @param int $respType
      * @param int $uploadType
-     * @return \Illuminate\Contracts\Cache\Repository|mixed
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
-     * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws Exception
      */
     public function imgUpload(string $imgUrl, int $respType=1, int $uploadType=1){
-        $media_upload = PlatformMediaUploadList::query()->where('file', $imgUrl)->first();
-        if(null==$media_upload){
+        if(cache()->has(self::WECHAT_IMG_UPLOAD_CACHE_KEY_PREFIX)){
+            $mediaData = cache()->get(self::WECHAT_IMG_UPLOAD_CACHE_KEY_PREFIX);
+        }else{
             $data = [
                 'resp_type' => (string)$respType,
                 'upload_type' => (string)$uploadType,
@@ -42,14 +40,26 @@ class Before extends Platfrom
             ];
             $this->setPath('img/upload');
             $mediaData = $this->uploadFile($data,'img_info');
-            $media_upload = new PlatformMediaUploadList();
-            $media_upload->file = $imgUrl;
-            $media_upload->mediaData = $mediaData;
-            $media_upload->save();
-        }else{
+            cache()->set(self::WECHAT_IMG_UPLOAD_CACHE_KEY_PREFIX,$mediaData);
 
-            $mediaData = $media_upload['mediaData'];
         }
+//        $media_upload = PlatformMediaUploadList::where('file', $imgUrl)->first();
+//        if(null==$media_upload){
+//            $data = [
+//                'resp_type' => (string)$respType,
+//                'upload_type' => (string)$uploadType,
+//                "img_url" => $imgUrl,
+//            ];
+//            $this->setPath('img/upload');
+//            $mediaData = $this->uploadFile($data,'img_info');
+//            $media_upload = new PlatformMediaUploadList();
+//            $media_upload->file = $imgUrl;
+//            $media_upload->mediaData = $mediaData;
+//            $media_upload->save();
+//        }else{
+//
+//            $mediaData = $media_upload['mediaData'];
+//        }
         return $mediaData;
 
 

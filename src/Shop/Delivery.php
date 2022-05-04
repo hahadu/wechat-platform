@@ -8,7 +8,7 @@ use Hahadu\WechatPlatform\Platfrom;
 /**
  * 物流接口
  */
-class WechatShopDelivery extends Platfrom
+class Delivery extends Platfrom
 {
 
     static public function init(): Platfrom
