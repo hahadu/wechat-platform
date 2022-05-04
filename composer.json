@@ -2,9 +2,7 @@
     "name": "hahadu/wechat-platform",
     "description": "wechat-platform",
     "keywords": [
-        "framework",
-        "thinkphp",
-        "admin"
+        "framework"
     ],
     "license": "Apache-2.0",
     "authors": [
