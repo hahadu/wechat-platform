@@ -21,6 +21,16 @@ class Spu extends Platfrom
         return $this->post($spu_data->filterArray());
 
     }
+    public function update($product_id,SpuData $spu_data)
+    {
+
+        $spu_data->checkData();
+
+        $this->setPath('update');
+
+        return $this->post($spu_data->filterArray());
+
+    }
 
     /**
      * 微信平台product_id

@@ -15,7 +15,11 @@ class SpuData extends AbstractBuild
 
     const DEFAULT_BRAND_ID = 2100000000;
     /**
-     * @var string 是    商家自定义商品ID
+     * @var int 微信端商品id 一般和 $out_product_id 二选一
+     */
+    public $product_id ;
+    /**
+     * @var string 是    商家自定义商品ID 一般和 $product_id 二选一
      */
     public $out_product_id;
     /**
