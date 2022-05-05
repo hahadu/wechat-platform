@@ -2,6 +2,7 @@
 
 namespace Hahadu\WechatPlatform\BuildData;
 
+use Exception;
 //class OrderDetail{}
 
 class OrderData extends AbstractBuild
@@ -26,7 +27,7 @@ class OrderData extends AbstractBuild
      * @var array[]    必须    配送信息 <br/>
      * @var array[delivery_type] 必须 1: 正常快递, 2: 无需快递, 3: 线下配送, 4: 用户自提，视频号场景目前只支持 1，正常快递
      */
-    public $delivery_detail;
+    public $delivery_detail = ['delivery_type'=>1];
     /**
      * @var string    必须    订单详情页路径
      */
@@ -88,14 +89,39 @@ class OrderData extends AbstractBuild
         $this->address_info = $AddressInfo;
     }
 
-
-
-
     /**
      * @return mixed
      */
     function checkData()
     {
 
+        throw_unless(is_string($this->create_time),Exception::class,'create_time 创建时间，yyyy-MM-dd HH:mm:ss，与微信服务器不得超过5秒偏差');
+        throw_unless(strlen($this->out_order_id)<=128,Exception::class,'out_order_id 商家自定义订单ID(字符集包括大小写字母数字，长度小于128个字符）');
+
+        throw_if(null==$this->order_detail, Exception::class,'order_detail 不能为空');
+        throw_unless(is_array($this->order_detail), Exception::class,'order_detail 为数组');
+        throw_unless(is_array($this->order_detail['product_infos']), Exception::class,'product_infos 为数组');
+        throw_unless(is_array($this->order_detail['price_info']), Exception::class,'price_info 为数组');
+        throw_unless(is_array($this->order_detail['pay_info']), Exception::class,'pay_info 为数组');
+        //foreach ()
+        throw_unless($this->address_info['receiver_name'],Exception::class,'收件人姓名不能为空');
+        throw_unless($this->address_info['detailed_address'],Exception::class,'收件人详细地址不能为空');
+        throw_unless($this->address_info['tel_number'],Exception::class,'收件人手机号码不能为空');
+
+        throw_unless($this->order_detail['pay_info']['pay_method_type'],Exception::class,'支付方式默认0: 微信支付, 1: 货到付款, 2: 商家会员储蓄卡（默认0）');
+
+        throw_unless($this->order_detail['price_info']['order_price'],Exception::class,'订单总价');
+        throw_unless($this->order_detail['price_info']['freight'],Exception::class,'运费');
+
+        throw_unless($this->order_detail['product_infos']['path'],Exception::class,'绑定的小程序商品路径');
+        throw_unless($this->order_detail['product_infos']['head_img'],Exception::class,'生成订单时商品的头图');
+        throw_unless($this->order_detail['product_infos']['title'],Exception::class,'生成订单时商品的标题');
+        throw_unless($this->order_detail['product_infos']['sku_real_price'],Exception::class,'sku总实付价');
+        throw_unless($this->order_detail['product_infos']['sale_price'],Exception::class,'生成订单时商品的售卖价（单位：分），可以跟上传商品接口的价格不一致');
+        throw_unless($this->order_detail['product_infos']['product_cnt'],Exception::class,'商品个数');
+        throw_unless($this->order_detail['product_infos']['out_sku_id'],Exception::class,'外部商品skuid');
+        throw_unless($this->order_detail['product_infos']['out_product_id'],Exception::class,'外部商品spuid');
+        throw_if(null == $this->delivery_detail, Exception::class ,'配送信息不能为空');
+        throw_if(null == $this->expire_time, Exception::class ,'秒级时间戳，订单超时时间，获取支付参数将使用此时间作为prepay_id 过期时间;时间到期之后，微信会流转订单超时取消（status = 181）');
     }
 }

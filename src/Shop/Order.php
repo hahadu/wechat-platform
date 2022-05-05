@@ -36,11 +36,12 @@ class Order extends Platfrom
      *
      * @return mixed
      */
-    public function add(OrderData $data)
+    public function add(OrderData $orderData)
     {
 
+        $orderData->checkData();
         $this->setPath('add');
-        return $this->post($data->filterArray(),'');
+        return $this->post($orderData->filterArray(),'');
 
     }
 
