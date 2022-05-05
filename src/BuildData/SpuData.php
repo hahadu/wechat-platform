@@ -81,7 +81,7 @@ class SpuData extends AbstractBuild
      * @var array[key][attr_key]        是    销售属性key（自定义），字符类型，最长不超过40 <br/>
      * @var array[key][attr_value]        是    销售属性value（自定义），字符类型，最长不超过40，相同key下不能超过100个不同value <br/>
      */
-    public $skus = [] ;
+    public $skus;
     /**
      * @var int[] array  是    商品使用场景,1:(default)视频号，3:订单中心
      */
@@ -140,7 +140,7 @@ class SpuData extends AbstractBuild
         throw_if(mb_strlen($this->title)<3 || mb_strlen($this->title) >=30, Exception::class, '最少不低于3，最长不超过60。商品标题不得仅为数字、字母、字符或上述三种的组合');
         throw_unless($this->path, Exception::class, "path 不能为空");
         throw_unless($this->head_img, Exception::class, "head_img 不能为空");
-        throw_if(count($this->head_img)>=9, Exception::class, "head_img 主图最多不超过9张");
+        throw_if(is_array($this->head_img)&&count($this->head_img)>=9, Exception::class, "head_img 主图最多不超过9张");
         throw_unless($this->third_cat_id!==null, Exception::class, "third_cat_id 不能为空");
         if(null!==$this->qualification_pics){
             throw_if(count($this->qualification_pics)>5, Exception::class,'qualification_pics 商品资质图片最多不超过5张');

@@ -19,8 +19,7 @@ class Before extends Platfrom
     public function getCarList(){
         $this->setPath('cat/get');
         $list = $this->post([],'third_cat_list');
-        //throw_if(!isset($list['third_cat_list']), Exception::class, "wechat api response Error ：".( $list['errmsg']??null), $list['errcode']??null);
-        return $list['third_cat_list'];
+        return $list;
     }
 
     /**
@@ -30,8 +29,8 @@ class Before extends Platfrom
      * @throws Exception
      */
     public function imgUpload(string $imgUrl, int $respType=1, int $uploadType=1){
-        if(cache()->has(self::WECHAT_IMG_UPLOAD_CACHE_KEY_PREFIX)){
-            $mediaData = cache()->get(self::WECHAT_IMG_UPLOAD_CACHE_KEY_PREFIX);
+        if(cache()->has(self::WECHAT_IMG_UPLOAD_CACHE_KEY_PREFIX.$imgUrl)){
+            $mediaData = cache()->get(self::WECHAT_IMG_UPLOAD_CACHE_KEY_PREFIX.$imgUrl);
         }else{
             $data = [
                 'resp_type' => (string)$respType,

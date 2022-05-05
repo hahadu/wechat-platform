@@ -114,6 +114,11 @@ class Platfrom
         $response = json_decode(curl_exec($curl),true);
 
         curl_close($curl);
+        if(isset($response['errcode']) && $response['errcode']==40001){
+            $this->setAccessToken(true);
+            return $this->get($data,$preKey);
+        }
+
         if(null!=$preKey){
             throw_if(!isset($response[$preKey]), Exception::class, "wechat api response Error ：".( $response['errmsg']??null), $response['errcode']??null);
         }

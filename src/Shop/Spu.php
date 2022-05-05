@@ -39,19 +39,26 @@ class Spu extends Platfrom
     }
 
     /**
-     * 微信平台product_id
-     * @param int $product_id
+     * 删除微信平台商品
+     * @param int $product_id 微信平台商品 product_id
      * @return mixed
      */
     public function del(int $product_id){
         $this->setPath('del');
-        return $this->post(['product_id'=>$product_id]);
+        return $this->post(['product_id'=>$product_id],'');
 
     }
 
-    public function get_detail(int $product_id, $need_edit_spu=0){
+    /**
+     * 获取商品详情
+     * @param int|null $product_id
+     * @param $need_edit_spu
+     * @param $out_product_id
+     * @return mixed
+     */
+    public function get_detail($product_id, $need_edit_spu=0,$out_product_id=null){
         $this->setPath('get');
-        return $this->post(compact("product_id","need_edit_spu"),'spu');
+        return $this->post(array_filter(compact("product_id","need_edit_spu",'out_product_id')),'spu');
     }
 
     /**
@@ -78,6 +85,12 @@ class Spu extends Platfrom
         return $response;
 
 
+    }
+
+
+    public function del_audit($product_id,$out_product_id=null){
+        $this->setPath('del_audit');
+        return $this->post(array_filter(compact('product_id','out_product_id')),'');
     }
 
     private function setPath($action){
