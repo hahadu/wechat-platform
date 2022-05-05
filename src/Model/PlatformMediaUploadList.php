@@ -15,6 +15,12 @@ class PlatformMediaUploadList  extends Model
         'mediaData' => 'json'
     ];
 
+    /**
+     * 上传图片
+     * @param $imgUrl
+     * @return \Illuminate\Contracts\Cache\Repository|mixed
+     * @throws \Exception
+     */
     public function uploadWechatPlatformImage($imgUrl)
     {
         $media_upload = $this->where('file', $imgUrl)->first();

@@ -50,6 +50,28 @@ class Spu extends Platfrom
     }
 
     /**
+     * 下架微信平台商品
+     * @param int $product_id 微信平台商品 product_id
+     * @return mixed
+     */
+    public function delisting(int $product_id){
+        $this->setPath('delisting');
+        return $this->post(['product_id'=>$product_id],'');
+
+    }
+
+    /**
+     * 上架微信平台商品
+     * @param int $product_id 微信平台商品 product_id
+     * @return mixed
+     */
+    public function listing(int $product_id){
+        $this->setPath('listing');
+        return $this->post(['product_id'=>$product_id],'');
+
+    }
+
+    /**
      * 获取商品详情
      * @param int|null $product_id
      * @param $need_edit_spu
