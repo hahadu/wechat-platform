@@ -26,7 +26,10 @@ class Before extends Platfrom
      * @param string $imgUrl
      * @param int $respType
      * @param int $uploadType
-     * @throws Exception
+     * @return \Illuminate\Contracts\Cache\Repository|mixed
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function imgUpload(string $imgUrl, int $respType=1, int $uploadType=1){
         if(cache()->has(self::WECHAT_IMG_UPLOAD_CACHE_KEY_PREFIX.$imgUrl)){

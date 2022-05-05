@@ -84,6 +84,7 @@ class Spu extends Platfrom
     }
 
     /**
+     * 获取商品列表
      * @return mixed
      */
     public function get_list($status=null,$page=1,$pageSize = 10){
@@ -110,6 +111,12 @@ class Spu extends Platfrom
     }
 
 
+    /**
+     * 撤销审核
+     * @param $product_id
+     * @param $out_product_id
+     * @return mixed
+     */
     public function del_audit($product_id,$out_product_id=null){
         $this->setPath('del_audit');
         return $this->post(array_filter(compact('product_id','out_product_id')),'');

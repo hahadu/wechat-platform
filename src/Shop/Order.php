@@ -113,6 +113,7 @@ class Order extends Platfrom
     }
 
     /**
+     * 更新订单地址
      * @param $priceData
      * @return mixed
      */
@@ -122,6 +123,7 @@ class Order extends Platfrom
     }
 
     /**
+     * 支付
      * @param $payData array[order_id    number(uint64)    否    订单ID
      * @param $payData array[out_order_id    string    否    商家自定义订单ID，与 order_id 二选一
      * @param $payData array[openid    string    是    用户的openid
@@ -134,6 +136,21 @@ class Order extends Platfrom
     public function orderPay($payData){
         $this->setPath('pay');
         return $this->post($payData);
+    }
+
+    /**
+     * 关闭订单
+     * @param $orderId
+     * @param $openId
+     * @return mixed
+     */
+    public function closeOrder($orderId,$openId){
+        $this->setPath('close');
+        $orderData = [
+            "order_id"=>$orderId,
+            "openid"=>$openId,
+        ];
+        return $this->post($orderData);
     }
 
     /**
