@@ -2,6 +2,7 @@
 
 namespace Hahadu\WechatPlatform\Shop;
 
+use Hahadu\WechatPlatform\BuildData\OrderData;
 use Hahadu\WechatPlatform\Platfrom;
 
 /**
@@ -35,11 +36,11 @@ class Order extends Platfrom
      *
      * @return mixed
      */
-    public function add($data=[])
+    public function add(OrderData $data)
     {
 
         $this->setPath('add');
-        return $this->post($data,'');
+        return $this->post($data->filterArray(),'');
 
     }
 
