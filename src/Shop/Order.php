@@ -84,7 +84,7 @@ class Order extends Platfrom
      */
     public function getPaymentParams($data){
         $this->setPath('getpaymentparams');
-        return $this->post($data);
+        return $this->post($data,'payment_params');
     }
 
     /**
@@ -111,7 +111,7 @@ class Order extends Platfrom
      */
     public function changePrice($priceData){
         $this->setPath('change_price');
-        return $this->post($priceData);
+        return $this->post($priceData,null);
     }
 
     /**
@@ -121,7 +121,7 @@ class Order extends Platfrom
      */
     public function updateAddress($priceData){
         $this->setPath('update_address');
-        return $this->post($priceData);
+        return $this->post($priceData,null);
     }
 
     /**
@@ -137,7 +137,7 @@ class Order extends Platfrom
      */
     public function orderPay($payData){
         $this->setPath('pay');
-        return $this->post($payData);
+        return $this->post($payData,null);
     }
 
     /**
@@ -152,7 +152,7 @@ class Order extends Platfrom
             "order_id"=>$orderId,
             "openid"=>$openId,
         ];
-        return $this->post($orderData);
+        return $this->post($orderData,null);
     }
 
     /**
