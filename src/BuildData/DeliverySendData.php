@@ -44,9 +44,10 @@ class DeliverySendData extends AbstractBuild
         throw_unless($this->order_id && $this->out_order_id, Exception::class, "商家自定义订单id(out_order_id)与order_id至少选一个");
         if($this->finish_all_delivery == 1){
             throw_unless($this->delivery_list, Exception::class, '物流信息不能为空');
-            throw_unless($this->delivery_list['delivery_id'], Exception::class, '快递公司ID，通过获取快递公司列表获取，将影响物流信息查询');
-            throw_unless($this->delivery_list['waybill_id'], Exception::class, '快递单号');
-            foreach ($this->delivery_list['product_info_list'] as $product_info){
+            foreach ($this->delivery_list as $delivery)
+            throw_unless($delivery['delivery_id'], Exception::class, '快递公司ID，通过获取快递公司列表获取，将影响物流信息查询');
+            throw_unless($delivery['waybill_id'], Exception::class, '快递单号');
+            foreach ($delivery['product_info_list'] as $product_info){
                 throw_unless($product_info['out_product_id'], Exception::class, '订单里的out_product_id');
                 throw_unless($product_info['out_sku_id'], Exception::class, '订单里的out_sku_id');
 

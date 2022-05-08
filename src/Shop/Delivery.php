@@ -59,7 +59,9 @@ class Delivery extends Platfrom
     public function getCompanyList():Collection
     {
         $this->setPath('get_company_list');
-        return Collection::make($this->post([],'company_list'));
+
+        $list = $this->post([],'company_list');
+        return Collection::make($list);
     }
 
     private function setPath($action)

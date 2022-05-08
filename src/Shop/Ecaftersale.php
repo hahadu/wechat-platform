@@ -33,6 +33,11 @@ class Ecaftersale extends Platfrom
 
     }
 
+    public function getList($data){
+        $this->setPath('get_list');
+        return $this->post($data,'');
+    }
+
     /**
      * 同意退款
      * @param $aftersale_id int 微信侧售后单号

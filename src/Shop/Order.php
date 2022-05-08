@@ -68,11 +68,15 @@ class Order extends Platfrom
      * @param $openid
      * @return mixed
      */
-    public function getOrderDetail($order_id,$openid){
+    public function getOrderDetail($order_id,$openid,$out_order_id=null){
         $this->setPath('get');
+        $orderData = array_filter([
+            'order_id' => $order_id,
+            'out_order_id' => $out_order_id,
+            'openid' => $openid
+        ]);
 
-
-        return $this->post(compact('order_id','openid'),'order');
+        return $this->post($orderData,'order');
     }
 
     /**
