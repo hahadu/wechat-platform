@@ -41,7 +41,7 @@ class Order extends Platfrom
 
         $orderData->checkData();
         $this->setPath('add');
-        return $this->post($orderData->filterArray(),'');
+        return $this->post($orderData->filterArray());
 
     }
 
@@ -71,7 +71,8 @@ class Order extends Platfrom
     public function getOrderDetail($order_id,$openid){
         $this->setPath('get');
 
-        return $this->post(compact($order_id,$openid),'order');
+
+        return $this->post(compact('order_id','openid'),'order');
     }
 
     /**

@@ -49,12 +49,10 @@ class Platfrom
         $this->heads = $head;
     }
     protected function post(array $data=[], $getKey="data"){
-        //dump($this->requestUrl());
         $fromFata = ["body"=>json_encode($data, JSON_UNESCAPED_UNICODE)];
         if(null!=$this->heads){
             $fromFata['headers'] = $this->heads;
         }
-        //dump($fromFata);
         $post = $this->guzzle->post($this->requestUrl(), $fromFata);
 
         throw_if($post->getStatusCode()!=200, \Exception::class, $post->getStatusCode()." response  error code");

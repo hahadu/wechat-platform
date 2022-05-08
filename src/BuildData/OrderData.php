@@ -111,6 +111,8 @@ class OrderData extends AbstractBuild
 
         throw_if(null===$this->order_detail['pay_info']['pay_method_type'],Exception::class,'pay_method_type 支付方式默认0: 微信支付, 1: 货到付款, 2: 商家会员储蓄卡（默认0）');
         throw_unless(in_array($this->order_detail['pay_info']['pay_method_type'],[0,1,2]),Exception::class,'pay_method_type 支付方式默认0: 微信支付, 1: 货到付款, 2: 商家会员储蓄卡（默认0）');
+        throw_unless($this->order_detail['pay_info']['prepay_id'],Exception::class, 'prepay_id required');
+        throw_unless($this->order_detail['pay_info']['prepay_time'],Exception::class, 'prepay_id prepay_time');
 
         throw_unless($this->order_detail['price_info']['order_price'],Exception::class,'订单总价');
         throw_if(null===$this->order_detail['price_info']['freight'],Exception::class,'运费');

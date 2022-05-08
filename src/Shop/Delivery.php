@@ -3,6 +3,7 @@
 namespace Hahadu\WechatPlatform\Shop;
 
 use Hahadu\Collect\Collection;
+use Hahadu\WechatPlatform\BuildData\DeliverySendData;
 use Hahadu\WechatPlatform\Platfrom;
 
 /**
@@ -45,9 +46,10 @@ class Delivery extends Platfrom
      *
      * @return mixed
      */
-    public function deliverySend($sendData){
+    public function deliverySend(DeliverySendData $sendData){
         $this->setPath('send');
-        $this->post($sendData, null);
+        $sendData->checkData();
+        return $this->post($sendData->filterArray(), null);
     }
 
     /**
