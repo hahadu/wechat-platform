@@ -53,7 +53,6 @@ class Platfrom
         if(null!=$this->heads){
             $fromFata['headers'] = $this->heads;
         }
-        dump($this->requestUrl());
         $post = $this->guzzle->post($this->requestUrl(), $fromFata);
 
         throw_if($post->getStatusCode()!=200, \Exception::class, $post->getStatusCode()." response  error code");
@@ -64,7 +63,6 @@ class Platfrom
             $this->setAccessToken(true);
             return $this->post($data,$getKey);
         }
-
         if(null!=$getKey){
             throw_if(!isset($content[$getKey]), Exception::class, "wechat api response Error ：".( $content['errmsg']??null), $content['errcode']??null);
             return $content[$getKey];
