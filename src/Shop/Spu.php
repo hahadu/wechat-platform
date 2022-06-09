@@ -122,6 +122,12 @@ class Spu extends Platfrom
         return $this->post(array_filter(compact('product_id','out_product_id')),'');
     }
 
+    public function update_without_audit($auditData){
+        $this->setPath('update_without_audit');
+        return $this->post($auditData);
+
+    }
+
     private function setPath($action){
         $this->path = "shop/spu/$action?access_token=";
     }

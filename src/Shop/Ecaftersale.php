@@ -46,7 +46,8 @@ class Ecaftersale extends Platfrom
      */
     public function acceptrefund($aftersale_id , $out_aftersale_id=null){
         $this->setPath('acceptrefund');
-        return $this->post(['aftersale_id'=>$aftersale_id], null);
+        $data = array_filter(compact('aftersale_id','out_aftersale_id'));
+        return $this->post($data, null);
     }
 
     /**
