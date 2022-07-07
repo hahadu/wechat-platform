@@ -66,7 +66,7 @@ class SpuData extends AbstractBuild
     /**
      * @var string string $info_version 否    预留字段，用于版本控制
      */
-    public $info_version = "V0.0.1";
+    public $info_version = "3.0";
 
     /**
      * @var array   是    sku数组 <br/>
