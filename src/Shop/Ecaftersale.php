@@ -71,8 +71,9 @@ class Ecaftersale extends Platfrom
      * @param $out_aftersale_id string 外部售后单号，和aftersale_id二选一
      * @return mixed
      */
-    public function reject($acceptData){
+    public function reject($aftersale_id , $out_aftersale_id=null){
         $this->setPath('reject');
+        $acceptData = array_filter(compact('aftersale_id','out_aftersale_id'));
         return $this->post($acceptData,null);
 
     }
