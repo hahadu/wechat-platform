@@ -17,12 +17,14 @@ class Platfrom
      */
     protected $guzzle;
     protected $heads = null;
+    protected $appConfig = [];
 
     //protected $redis;
 
-    public function __construct()
+    public function __construct($appConfig=[])
     {
-        $this->guzzle = new Client();
+        $this->guzzle    = new Client();
+        $this->appConfig = $appConfig;
         $this->setAccessToken();
     }
 
@@ -36,7 +38,7 @@ class Platfrom
 
     private function setAccessToken(bool $refresh = false){
         /** @var Application $miniProgramApp */
-        $miniProgramApp = app('miniProgram');
+        $miniProgramApp = app('miniProgram',$this->appConfig);
         $token = $miniProgramApp->access_token->getToken($refresh);
         return $this->access_token = $token['access_token'];
     }

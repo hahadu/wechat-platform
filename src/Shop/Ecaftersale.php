@@ -43,9 +43,15 @@ class Ecaftersale extends Platfrom
         return $this->post($data,'');
     }
 
-    public function getDetail($aftersale_id,$out_aftersale_id=null){
+    /**
+     * 售后详情
+     * @param $aftersale_id
+     * @param $out_aftersale_id
+     * @return mixed
+     */
+    public function getDetail($aftersale_id,$out_aftersale_id=null,$order_id=null,$out_order_id=null){
         $this->setPath('get');
-        $data = array_filter(compact('aftersale_id','out_aftersale_id'));
+        $data = array_filter(compact('aftersale_id','out_aftersale_id','order_id','out_order_id'));
         return $this->post($data,'');
 
     }
