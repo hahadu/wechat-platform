@@ -19,7 +19,7 @@ class Register extends Platfrom
     public function apply()
     {
         $this->setPath('apply');
-        return $this->post([]);
+        return $this->post([],'');
 
     }
 
@@ -30,7 +30,7 @@ class Register extends Platfrom
      */
     public function check(){
         $this->setPath('check');
-        return $this->post();
+        return $this->post([]);
     }
 
     /**
@@ -44,7 +44,7 @@ class Register extends Platfrom
             throw new \Exception('非法参数值');
         }
         $this->setPath('finish_access_info');
-        return $this->post(['access_info_item'=>$access_info_item]);
+        return $this->post(['access_info_item'=>$access_info_item],'');
     }
 
     /**
@@ -54,7 +54,7 @@ class Register extends Platfrom
      */
     public function applyScene(int $scene_group_id){
         $this->setPath('apply_scene');
-        return $this->post(['scene_group_id'=>$scene_group_id]);
+        return $this->post(['scene_group_id'=>$scene_group_id],'');
     }
 
     /**

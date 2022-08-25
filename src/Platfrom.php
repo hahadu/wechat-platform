@@ -4,6 +4,7 @@ namespace Hahadu\WechatPlatform;
 use EasyWeChat\MiniProgram\Application;
 use GuzzleHttp\Client;
 use Exception;
+use Illuminate\Support\Arr;
 
 
 class Platfrom
@@ -59,14 +60,13 @@ class Platfrom
 
         throw_if($post->getStatusCode()!=200, \Exception::class, $post->getStatusCode()." response  error code");
         $content = json_decode($post->getBody()->getContents(), true);
-        //dump($post->getHeaders());
-        if(isset($content['errcode']) && $content['errcode']==40001){
+        if(Arr::get($content,'errcode')==40001){
             //如果提示权限失败，重新获取token后请求
             $this->setAccessToken(true);
             return $this->post($data,$getKey);
         }
         if(null!=$getKey){
-            throw_if(!isset($content[$getKey]), Exception::class, "wechat api response Error ：".( $content['errmsg']??null), $content['errcode']??null);
+            throw_if(!isset($content[$getKey]), Exception::class, "wechat api response Error ：".( Arr::get($content,'errmsg',null)), $content['errcode']??0);
             return $content[$getKey];
         }else{
             return $content;

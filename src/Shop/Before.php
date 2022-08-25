@@ -13,7 +13,7 @@ class Before extends Platfrom
 {
     const WECHAT_IMG_UPLOAD_CACHE_KEY_PREFIX = "wechat_img_upload_cache_key_prefix:";
     /**
-     * 获取商品类目
+     * 获取商品类目详情
      * @return mixed
      */
     public function getCarList(){
@@ -23,6 +23,7 @@ class Before extends Platfrom
     }
 
     /**
+     * 上传图片
      * @param string $imgUrl
      * @param int $respType
      * @param int $uploadType
@@ -45,23 +46,6 @@ class Before extends Platfrom
             cache()->set(self::WECHAT_IMG_UPLOAD_CACHE_KEY_PREFIX,$mediaData);
 
         }
-//        $media_upload = PlatformMediaUploadList::where('file', $imgUrl)->first();
-//        if(null==$media_upload){
-//            $data = [
-//                'resp_type' => (string)$respType,
-//                'upload_type' => (string)$uploadType,
-//                "img_url" => $imgUrl,
-//            ];
-//            $this->setPath('img/upload');
-//            $mediaData = $this->uploadFile($data,'img_info');
-//            $media_upload = new PlatformMediaUploadList();
-//            $media_upload->file = $imgUrl;
-//            $media_upload->mediaData = $mediaData;
-//            $media_upload->save();
-//        }else{
-//
-//            $mediaData = $media_upload['mediaData'];
-//        }
         return $mediaData;
 
 

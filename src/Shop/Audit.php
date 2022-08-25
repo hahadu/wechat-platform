@@ -42,7 +42,7 @@ class Audit extends Platfrom
      * @return mixed
      */
     public function getMiniappCertificate($reqType){
-        $this->setPath('audit_brand');
+        $this->setPath('get_miniapp_certificate');
 
         $data = ['req_type'=>$reqType];
         return $this->post($data,'');
