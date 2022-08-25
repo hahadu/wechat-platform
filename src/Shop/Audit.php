@@ -48,8 +48,15 @@ class Audit extends Platfrom
         return $this->post($data,'');
     }
 
-
-
+    /**
+     * 根据审核id，查询品牌和类目的审核结果。
+     * @param $audit_id
+     * @return mixed
+     */
+    public function getAuditResult($audit_id){
+        $this->setPath('result');
+        return $this->post(['audit_id'=>$audit_id],'data');
+    }
 
     private function setPath($action){
         $this->path = "shop/audit/$action?access_token=";

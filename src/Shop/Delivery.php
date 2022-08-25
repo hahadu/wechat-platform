@@ -23,11 +23,11 @@ class Delivery extends Platfrom
      * @param $recieveData array[order_id    number    否    订单ID
      * @param $recieveData array[out_order_id    string    否    商家自定义订单ID，与 order_id 二选一
      * @param $recieveData array[openid    string    是    用户的openid
-     * @return void
+     * @return mixed
      */
     public function recieve($recieveData){
         $this->setPath('send');
-        $this->post($recieveData, null);
+        return $this->post($recieveData, null);
     }
 
     /**
