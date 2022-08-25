@@ -51,6 +51,7 @@ class Account extends Platfrom
      * @param $default_receiving_address array[city]    string    否    城市
      * @param $default_receiving_address array[town]    string    否    乡镇
      * 更新微信平台商家信息
+     * @throws \Throwable
      */
     public function update_info(array $default_receiving_address, $service_agent_path, $service_agent_phone, array $service_agent_type=[0] ){
         throw_unless(isset($default_receiving_address["receiver_name"])&&isset($default_receiving_address["detailed_address"])&&isset($default_receiving_address["tel_number"]), \Exception::class, '收货地址、姓名、电话必传');
@@ -60,16 +61,6 @@ class Account extends Platfrom
             "service_agent_phone" => $service_agent_phone, //必填
             "service_agent_type" => $service_agent_type,
             "default_receiving_address" => $default_receiving_address,
-
-//            "default_receiving_address" => [
-//                "receiver_name" => "苗先生",
-//                "detailed_address" => "广东省广州市白云区石井银马服装城c区514",
-//                "tel_number" => "18122319317",
-//                "country" => "中国", //选填
-//                "province" => "广东", //选填
-//                "city" => "广州",//选填
-//                "town" => "石井"//选填
-//            ],
         ];
         $this->setPath('update_info');
         return $this->post($data,null);
