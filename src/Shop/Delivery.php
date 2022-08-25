@@ -26,7 +26,7 @@ class Delivery extends Platfrom
      * @return mixed
      */
     public function recieve($recieveData){
-        $this->setPath('send');
+        $this->setPath('recieve');
         return $this->post($recieveData, null);
     }
 
