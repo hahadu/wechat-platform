@@ -13,6 +13,7 @@ use function throw_unless;
 class SpuData extends AbstractBuild
 {
 
+    const WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR = 9900001;
     const DEFAULT_BRAND_ID = 2100000000;
     /**
      * @var int 微信端商品id 一般和 $out_product_id 二选一
@@ -134,36 +135,35 @@ class SpuData extends AbstractBuild
      * @throws \Throwable
      */
     public function checkData(){
-        //Collection::make()->toArray()
-        throw_unless($this->out_product_id, Exception::class, "out_product_id 不能为空");
-        throw_unless($this->title, Exception::class, "title 不能为空");
-        throw_if(mb_strlen($this->title)<3 || mb_strlen($this->title) >=30, Exception::class, '最少不低于3，最长不超过60。商品标题不得仅为数字、字母、字符或上述三种的组合');
-        throw_unless($this->path, Exception::class, "path 不能为空");
-        throw_unless($this->head_img, Exception::class, "head_img 不能为空");
-        throw_if(is_array($this->head_img)&&count($this->head_img)>=9, Exception::class, "head_img 主图最多不超过9张");
-        throw_unless($this->third_cat_id!==null, Exception::class, "third_cat_id 不能为空");
+        throw_unless($this->out_product_id, Exception::class, "out_product_id 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+        throw_unless($this->title, Exception::class, "title 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+        throw_if(mb_strlen($this->title)<3 || mb_strlen($this->title) >=30, Exception::class, '最少不低于3，最长不超过60。商品标题不得仅为数字、字母、字符或上述三种的组合',self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+        throw_unless($this->path, Exception::class, "path 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+        throw_unless($this->head_img, Exception::class, "head_img 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+        throw_if(is_array($this->head_img)&&count($this->head_img)>=9, Exception::class, "head_img 主图最多不超过9张",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+        throw_unless($this->third_cat_id!==null, Exception::class, "third_cat_id 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
         if(null!==$this->qualification_pics){
-            throw_if(count($this->qualification_pics)>5, Exception::class,'qualification_pics 商品资质图片最多不超过5张');
+            throw_if(count($this->qualification_pics)>5, Exception::class,'qualification_pics 商品资质图片最多不超过5张',self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
         }
-        throw_unless($this->desc_info, Exception::class, "商品详情图文 desc_info 不能为空");
-        throw_if(mb_strlen($this->desc_info['desc']) > 2000, Exception::class, '商品详情图文 desc_info，字符类型，最长不超过2000');
-        throw_unless($this->brand_id!==null, Exception::class, "brand_id 不能为空");
-        throw_unless($this->info_version, Exception::class, "info_version 不能为空");
-        throw_unless($this->skus, Exception::class, "skus 不能为空");
+        throw_unless($this->desc_info, Exception::class, "商品详情图文 desc_info 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+        throw_if(mb_strlen($this->desc_info['desc']) > 2000, Exception::class, '商品详情图文 desc_info，字符类型，最长不超过2000',self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+        throw_unless($this->brand_id!==null, Exception::class, "brand_id 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+        throw_unless($this->info_version, Exception::class, "info_version 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+        throw_unless($this->skus, Exception::class, "skus 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
         foreach ($this->skus as $sku){
-            throw_unless($sku['out_product_id'], Exception::class, "skus[].out_product_id 不能为空");
-            throw_unless($sku['out_sku_id'], Exception::class, "skus[].out_sku_id 不能为空");
-            throw_unless($sku['thumb_img'], Exception::class, "skus[].thumb_img 不能为空");
-            throw_unless($sku['sale_price'], Exception::class, "skus[].sale_price 不能为空");
-            throw_unless($sku['market_price'], Exception::class, "skus[].market_price 不能为空");
-            throw_unless($sku['stock_num'], Exception::class, "skus[].stock_num 不能为空");
-            throw_unless($sku['sku_attrs'], Exception::class, "skus[].sku_attrs 不能为空");
+            throw_unless($sku['out_product_id'], Exception::class, "skus[].out_product_id 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+            throw_unless($sku['out_sku_id'], Exception::class, "skus[].out_sku_id 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+            throw_unless($sku['thumb_img'], Exception::class, "skus[].thumb_img 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+            throw_unless($sku['sale_price'], Exception::class, "skus[].sale_price 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+            throw_unless($sku['market_price'], Exception::class, "skus[].market_price 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+            throw_unless($sku['stock_num'], Exception::class, "skus[].stock_num 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+            throw_unless($sku['sku_attrs'], Exception::class, "skus[].sku_attrs 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
             foreach ($sku['sku_attrs'] as $attr){
-                throw_unless($attr['attr_key'], Exception::class, "skus[].sku_attrs[].attr_key 不能为空");
-                throw_unless($attr['attr_value'], Exception::class, "skus[].sku_attrs[].attr_value 不能为空");
+                throw_unless($attr['attr_key'], Exception::class, "skus[].sku_attrs[].attr_key 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
+                throw_unless($attr['attr_value'], Exception::class, "skus[].sku_attrs[].attr_value 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
             }
         }
-        throw_unless($this->scene_group_list, Exception::class, "scene_group_list 不能为空");
+        throw_unless($this->scene_group_list, Exception::class, "scene_group_list 不能为空",self::WECHAT_PLATFORM_PRODUCT_SPU_DATA_ERROR);
 
     }
 
