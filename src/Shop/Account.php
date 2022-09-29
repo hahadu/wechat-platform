@@ -54,7 +54,7 @@ class Account extends Platfrom
      * @throws \Throwable
      */
     public function update_info(array $default_receiving_address, $service_agent_path, $service_agent_phone, array $service_agent_type=[0] ){
-        throw_unless(isset($default_receiving_address["receiver_name"])&&isset($default_receiving_address["detailed_address"])&&isset($default_receiving_address["tel_number"]), \Exception::class, '收货地址、姓名、电话必传');
+        //throw_unless(isset($default_receiving_address["receiver_name"])&&isset($default_receiving_address["detailed_address"])&&isset($default_receiving_address["tel_number"]), \Exception::class, '收货地址、姓名、电话必传');
 
         $data = [
             "service_agent_path" => $service_agent_path,
@@ -63,9 +63,38 @@ class Account extends Platfrom
             "default_receiving_address" => $default_receiving_address,
         ];
         $this->setPath('update_info');
-        return $this->post($data,null);
+        $options = [
+            'multipart' => [
+                [
+                    'name' => 'service_agent_path',
+                    'contents' => $service_agent_path
+                ],
+                [
+                    'name' => 'service_agent_phone',
+                    'contents' => $service_agent_phone
+                ],
+                [
+                    'name' => 'service_agent_type[]',
+                    'contents' => $service_agent_type[0]
+                ],
+                [
+                    'name' => 'default_receiving_address[receiver_name]',
+                    'contents' => $default_receiving_address['receiver_name']
+                ],
+                [
+                    'name' => 'default_receiving_address[detailed_address]',
+                    'contents' => $default_receiving_address['detailed_address']
+                ],
+                [
+                    'name' => 'default_receiving_address[tel_number]',
+                    'contents' => $default_receiving_address['tel_number']
+                ],
+            ]];
+
+        return $this->post($options,null);
 
     }
+
     private function setPath($action){
         $this->path = "shop/account/$action?access_token=";
     }

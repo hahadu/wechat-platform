@@ -5,7 +5,7 @@ use EasyWeChat\MiniProgram\Application;
 use GuzzleHttp\Client;
 use Exception;
 use Illuminate\Support\Arr;
-
+use GuzzleHttp\Psr7\Request as GuzzleRequest;
 
 class Platfrom
 {
@@ -51,12 +51,19 @@ class Platfrom
     protected function setRequestHead($head){
         $this->heads = $head;
     }
-    protected function post(array $data=[], $getKey="data"){
+    protected function post(array $data=[], $getKey="data",$postType=''){
         $fromFata = ["body"=>json_encode($data, JSON_UNESCAPED_UNICODE)];
+
         if(null!=$this->heads){
             $fromFata['headers'] = $this->heads;
         }
-        $post = $this->guzzle->post($this->requestUrl(), $fromFata);
+        $request = new GuzzleRequest('POST',$this->requestUrl());
+        if($postType=='formdata'){
+            $post = $this->guzzle->sendAsync($request,$data)->wait();
+        }else{
+            $post = $this->guzzle->post($this->requestUrl(), $fromFata);
+
+        }
 
         throw_if($post->getStatusCode()!=200, \Exception::class, $post->getStatusCode()." response  error code");
         $content = json_decode($post->getBody()->getContents(), true);
@@ -66,6 +73,7 @@ class Platfrom
             return $this->post($data,$getKey);
         }
         if(null!=$getKey){
+            \Log::info('request-url : ' . $this->requestUrl());
             throw_if(!isset($content[$getKey]), Exception::class, "wechat api response Error ：".( Arr::get($content,'errmsg',null)), $content['errcode']??0);
             return $content[$getKey];
         }else{
