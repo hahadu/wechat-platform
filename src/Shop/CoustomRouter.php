@@ -11,4 +11,8 @@ class CoustomRouter extends Platfrom
         return $this->post($data,'');
     }
 
+    public function setRequestHostUrl($requestHost = 'https://api.weixin.qq.com/')
+    {
+        $this->requestHost = $requestHost;
+    }
 }
