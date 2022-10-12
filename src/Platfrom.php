@@ -73,7 +73,6 @@ class Platfrom
             return $this->post($data,$getKey);
         }
         if(null!=$getKey){
-            \Log::info('request-url : ' . $this->requestUrl());
             throw_if(!isset($content[$getKey]), Exception::class, "wechat api response Error ：".( Arr::get($content,'errmsg',null)), $content['errcode']??0);
             return $content[$getKey];
         }else{
