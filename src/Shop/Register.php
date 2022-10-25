@@ -63,7 +63,7 @@ class Register extends Platfrom
      * @return void
      */
     private function setPath($action){
-        $this->path = "shop/register/$action?access_token=";
+        $this->path = "shop/register/$action?";
     }
 
 

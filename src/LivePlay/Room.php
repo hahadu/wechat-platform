@@ -39,7 +39,7 @@ class Room extends Platfrom
     }
 
     private function setPath($action){
-        $this->path = "wxaapi/broadcast/room/$action?access_token=";
+        $this->path = "wxaapi/broadcast/room/$action?";
     }
 
 

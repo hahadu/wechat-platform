@@ -129,7 +129,7 @@ class Spu extends Platfrom
     }
 
     private function setPath($action){
-        $this->path = "shop/spu/$action?access_token=";
+        $this->path = "shop/spu/$action?";
     }
 
 

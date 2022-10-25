@@ -96,7 +96,7 @@ class Account extends Platfrom
     }
 
     private function setPath($action){
-        $this->path = "shop/account/$action?access_token=";
+        $this->path = "shop/account/$action?";
     }
 
 

@@ -66,7 +66,7 @@ class Delivery extends Platfrom
 
     private function setPath($action)
     {
-        $this->path = "shop/delivery/$action?access_token=";
+        $this->path = "shop/delivery/$action?";
     }
 
 }

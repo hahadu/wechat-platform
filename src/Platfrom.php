@@ -1,11 +1,13 @@
 <?php
 
 namespace Hahadu\WechatPlatform;
+use App\Models\AppsConfig;
 use EasyWeChat\MiniProgram\Application;
 use GuzzleHttp\Client;
 use Exception;
 use Illuminate\Support\Arr;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
+use Illuminate\Support\Facades\Redis;
 
 class Platfrom
 {
@@ -20,13 +22,23 @@ class Platfrom
     protected $heads = null;
     protected $appConfig = [];
 
+    const PLAT_TYPE_OPEN = 'open_plat';
+    const PLAT_TYPE_APP = 'miniprogram_app';
     //protected $redis;
 
-    public function __construct($appConfig=[])
+    public function __construct($appConfig=[],$type = self::PLAT_TYPE_APP)
     {
         $this->guzzle    = new Client();
         $this->appConfig = $appConfig;
-        $this->setAccessToken();
+        switch ($type){
+            case self::PLAT_TYPE_OPEN:
+                $this->setOpenplatAccessToken();
+                break;
+            default:
+                $this->setAccessToken();
+                break;
+        }
+        $this->setOpenplatAccessToken();
     }
 
     /**
@@ -41,9 +53,25 @@ class Platfrom
         /** @var Application $miniProgramApp */
         $miniProgramApp = app('miniProgram',$this->appConfig);
         $token = $miniProgramApp->access_token->getToken($refresh);
-        return $this->access_token = $token['access_token'];
+        return $this->access_token = 'access_token='.$token['access_token'];
     }
 
+    private function setOpenplatAccessToken(bool $refresh = false){
+        $authorizer_refresh_token = Redis::get($this->appConfig['authorizer_refresh_token_key']);
+        if(null==$authorizer_refresh_token){
+            $authorizer_refresh_token = AppsConfig::where('type',AppsConfig::WECHAT_MINI_PROGRAM)->where('biz_appid',$this->appConfig['app_id'])->select(['biz_appid','refresh_token'])->first()->refresh_token;
+            Redis::set($this->appConfig['authorizer_refresh_token'],$authorizer_refresh_token);
+        }
+
+        /** @var \EasyWeChat\OpenPlatform\Authorizer\MiniProgram\Application $miniProgramApp */
+        /** @var \EasyWeChat\OpenPlatform\Application $openApp */
+        $openApp = app('wechatOpenApp');
+        $miniProgramApp = $openApp->miniProgram($this->appConfig['app_id'],$authorizer_refresh_token);
+        $token = $miniProgramApp->access_token->getToken($refresh);
+        //$this->access_token_type = 'authorizer_access_token';
+        return $this->access_token = 'authorizer_access_token='.$token['authorizer_access_token'];
+
+    }
     protected function requestUrl(){
         return $this->requestHost.$this->path.$this->access_token;
     }

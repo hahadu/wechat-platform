@@ -57,7 +57,7 @@ class Before extends Platfrom
      * @return void
      */
     private function setPath($action){
-        $this->path = "shop/$action?access_token=";
+        $this->path = "shop/$action?";
     }
 
 

@@ -100,7 +100,7 @@ class Ecaftersale extends Platfrom
 
     private function setPath($action)
     {
-        $this->path = "shop/ecaftersale/$action?access_token=";
+        $this->path = "shop/ecaftersale/$action?";
     }
 
 }

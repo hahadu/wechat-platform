@@ -7,7 +7,7 @@ use Hahadu\WechatPlatform\Platfrom;
 class CoustomRouter extends Platfrom
 {
     public function postCoustomRoute($path = '',$data = []){
-        $this->path = $path . '?access_token=';
+        $this->path = $path . '?';
         return $this->post($data,'');
     }
 

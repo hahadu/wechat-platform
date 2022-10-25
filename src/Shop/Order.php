@@ -166,7 +166,7 @@ class Order extends Platfrom
      * @return void
      */
     private function setPath($action){
-        $this->path = "shop/order/$action?access_token=";
+        $this->path = "shop/order/$action?";
     }
 
 

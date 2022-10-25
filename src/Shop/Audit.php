@@ -59,7 +59,7 @@ class Audit extends Platfrom
     }
 
     private function setPath($action){
-        $this->path = "shop/audit/$action?access_token=";
+        $this->path = "shop/audit/$action?";
     }
 
 }
