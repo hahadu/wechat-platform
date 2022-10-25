@@ -26,7 +26,7 @@ class Platfrom
     const PLAT_TYPE_APP = 'miniprogram_app';
     //protected $redis;
 
-    public function __construct($appConfig=[],$type = self::PLAT_TYPE_APP)
+    public function __construct($appConfig=[],$type = self::PLAT_TYPE_OPEN)
     {
         $this->guzzle    = new Client();
         $this->appConfig = $appConfig;
@@ -38,7 +38,6 @@ class Platfrom
                 $this->setAccessToken();
                 break;
         }
-        $this->setOpenplatAccessToken();
     }
 
     /**
