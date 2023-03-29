@@ -120,10 +120,11 @@ class Platfrom
             return $this->get($data,$preKey);
         }
         if(null!=$preKey){
-            throw_if(!isset($content[$preKey]), Exception::class, "wechat api response Error ：".( $content['errmsg']??null), $content['errcode']??null);
+            throw_if(!isset($content[$preKey]), Exception::class, "wechat api response Error ：" . ($content['errmsg']??null), $content['errcode']??null);
+            return $content[$preKey];
+        }else{
+            return $content;
         }
-
-        return $content[$preKey];
     }
 
 

@@ -10,6 +10,10 @@ class CoustomRouter extends Platfrom
         $this->path = $path . '?';
         return $this->post($data,'');
     }
+    public function getCoustomRoute($path = '',$data = [],$preKey=null){
+        $this->path = $path . '?';
+        return $this->get($data,$preKey);
+    }
 
     public function setRequestHostUrl($requestHost = 'https://api.weixin.qq.com/')
     {
