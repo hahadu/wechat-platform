@@ -59,7 +59,7 @@ class Platfrom
         $authorizer_refresh_token = Redis::get($this->appConfig['authorizer_refresh_token_key']);
         if(null==$authorizer_refresh_token){
             $authorizer_refresh_token = AppsConfig::where('type',AppsConfig::WECHAT_MINI_PROGRAM)->where('biz_appid',$this->appConfig['app_id'])->select(['biz_appid','refresh_token'])->first()->refresh_token;
-            Redis::set($this->appConfig['authorizer_refresh_token'],$authorizer_refresh_token);
+            Redis::set($this->appConfig['authorizer_refresh_token_key'],$authorizer_refresh_token);
         }
 
         /** @var \EasyWeChat\OpenPlatform\Authorizer\MiniProgram\Application $miniProgramApp */
@@ -67,8 +67,7 @@ class Platfrom
         $openApp = app('wechatOpenApp');
         $miniProgramApp = $openApp->miniProgram($this->appConfig['app_id'],$authorizer_refresh_token);
         $token = $miniProgramApp->access_token->getToken($refresh);
-        //$this->access_token_type = 'authorizer_access_token';
-        return $this->access_token = 'authorizer_access_token='.$token['authorizer_access_token'];
+        return $this->access_token = 'access_token='.$token['authorizer_access_token'];
 
     }
     protected function requestUrl(){
@@ -79,6 +78,9 @@ class Platfrom
         $this->heads = $head;
     }
     protected function post(array $data=[], $getKey="data",$postType=''){
+        if(empty($data)){
+            $data = new \stdClass();
+        }
         $fromFata = ["body"=>json_encode($data, JSON_UNESCAPED_UNICODE)];
 
         if(null!=$this->heads){
